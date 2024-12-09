@@ -1,28 +1,31 @@
-import React,{useContext} from 'react'
-import { useNavigate,useParams } from 'react-router-dom'
+
+
+
+import React, { useContext } from 'react'
+
 import { Context } from './Home'
 
-function Contents() {
-    const navigate = useNavigate()
-const {blogId} = useParams()
-
-const {blog} = useContext(Context)
-const specific = blog.find((blogs) => blogs.id === Number(blogId))
-
+const Contents = () => {
+  
+  const {correct,incorrect}=useContext(Context)
+  console.log(correct)
+  console.log(incorrect)
   return (
     <div>
-        <div >
-        <h1>Blogs contents</h1>
-        <h1>Title: {specific.title}</h1>
-        <p>Body: {specific.body}</p>
-        </div>
-        <button onClick={()=> navigate('/')}>Go Back</button>
+      <h1>CORRECT ANSWERS</h1>
+      {correct.map((curr)=>(
+        <ul>
+          <li>{curr}</li>
+        </ul>
+      ))}
+      <h1>WRONG ANSWERS</h1>
+      {incorrect.map((incurr)=>(
+        <ul>
+          <li>{incurr}</li>
+        </ul>
+      ))}
     </div>
-
   )
 }
 
 export default Contents
-
-
-

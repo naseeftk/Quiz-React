@@ -1,33 +1,40 @@
-import React from 'react'
-import { useContext } from 'react'
-import { useNavigate,Link} from 'react-router-dom'
-import {Context} from './Home'
 
+import React, { useContext } from 'react'
+import { Context } from './Home'
+import { useNavigate } from 'react-router-dom'
 
+const Front = () => {
+  const{correct,setCorrect,incorrect,setIncorrect,obj}=useContext(Context)
+  const navigate=useNavigate()
+  const submit=()=>{
+    navigate('/content')
+ 
+    }
+    const handle=(slctd,corct)=>{
+      if(slctd===corct){
+        setCorrect([...slctd,slctd])
+      }else {
+        setIncorrect([...slctd,slctd])
+      }
 
-function FrontPage() {
-  const {blog,setBlog} = useContext(Context)
-
-  
-
-  const navigate = useNavigate()
-
+  }
   return (
-    <div >
-        <h1>Blogs</h1>
-        <ul>
-        {blog.map((blogs,ind) => (
-          <li key={blogs.id}>
-            <Link to={`/blogs/${blogs.id}`}>{blogs.title}</Link>
-            
-            </li>))
+    <div>
+      {obj.map((curr)=>(
+        <div>
+          <h1>{curr.qn}</h1>
+<input type="radio" value={curr.opt[0]} name={`${curr.id}`} onClick={(()=>handle(curr.opt[0],curr.ans))} /> <label>{curr.opt[0]}</label>
+<input type="radio" value={curr.opt[1]} name={`${curr.id}`}onClick={(()=>handle(curr.opt[1],curr.ans))} /><label>{curr.opt[1]}</label>
+<input type="radio" value={curr.opt[2]} name={`${curr.id}`} onClick={(()=>handle(curr.opt[2],curr.ans))} /><label>{curr.opt[2]}</label>
 
-        }
-        </ul>
-        <button onClick={()=>navigate('/CreateBlog')}>Create </button>
+</div>
+      ))}
+     
+<button type='button' onClick={submit}>submit</button>                                                                                                  
+
     </div>
   )
 }
 
-export default FrontPage
+export default Front
 
